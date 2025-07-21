@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetPorter App UI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Link to external CSS file (compiled from SCSS) -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Link to external JavaScript file -->
+    <script src="script.js" type="module"></script>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header" id="appHeader">
+            หน้าหลัก
+        </div>
+
+        <!-- Home Section -->
+        <div id="homeSection" class="content-section active">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">ยินดีต้อนรับสู่ PetPorter!</h2>
+
+            <!-- Image Input Section -->
+            <div class="card mb-6 flex flex-col items-center">
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">รูปภาพประจำวันของสัตว์เลี้ยง</h3>
+                <img id="homeImagePreview" src="https://placehold.co/300x150/fcd34d/000000?text=Your+Pet+Here" alt="Home Image" class="w-full h-40 object-cover rounded-lg mb-4 shadow-md">
+                <input type="file" id="homeImageInput" class="hidden" accept="image/*" onchange="handleHomeImageChange(event)">
+                <button onclick="document.getElementById('homeImageInput').click()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out shadow-md flex items-center justify-center">
+                    <i data-lucide="image" class="w-5 h-5 mr-2"></i>
+                    เลือกรูปภาพ
+                </button>
+            </div>
+            <!-- End Image Input Section -->
+
+            <button onclick="showSection('bookSection')" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 mb-3 flex items-center justify-center">
+                <i data-lucide="car" class="w-6 h-6 mr-3"></i>
+                เรียกบริการรับ-ส่งสัตว์เลี้ยง
+            </button>
+
+            <button onclick="showSection('promotionsSection')" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 mb-3 flex items-center justify-center">
+                <i data-lucide="tag" class="w-5 h-5 mr-2"></i>
+                ดูโปรโมชั่น
+            </button>
+
+            <button onclick="showSection('pricesSection')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1 mb-6 flex items-center justify-center">
+                <i data-lucide="dollar-sign" class="w-5 h-5 mr-2"></i>
+                ดูราคาบริการ
+            </button>
+
+            <div class="card">
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">สถานะการเดินทางปัจจุบัน (จำลอง)</h3>
+                <p class="text-gray-500 text-sm mb-2">ยังไม่มีการเดินทางที่กำลังดำเนินการ</p>
+                <!-- You can add dynamic content here later for active trips -->
+            </div>
+        </div>
+
+        <!-- Promotions Section -->
+        <div id="promotionsSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">โปรโมชั่นปัจจุบัน</h2>
+            <div class="mb-6 rounded-xl overflow-hidden shadow-lg">
+                <img src="https://placehold.co/400x200/8a2be2/ffffff?text=" alt="Promotion Banner" class="w-full h-auto object-cover">
+            </div>
+            <div class="card mb-6">
+                <ul class="space-y-4">
+                    <li class="flex items-center space-x-3 bg-blue-50 p-4 rounded-lg shadow-sm">
+                        <i data-lucide="tag" class="w-6 h-6 text-blue-600"></i>
+                        <div>
+                            <p class="font-medium text-gray-800">ลด 10% สำหรับการเดินทางครั้งแรก!</p>
+                            <p class="text-sm text-gray-600">สำหรับลูกค้าใหม่เท่านั้น ใช้โค้ด NEWPET</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center space-x-3 bg-green-50 p-4 rounded-lg shadow-sm">
+                        <i data-lucide="gift" class="w-6 h-6 text-green-600"></i>
+                        <div>
+                            <p class="font-medium text-gray-800">ฟรี! บริการล้างเท้าสัตว์เลี้ยง</p>
+                            <p class="text-sm text-gray-600">เมื่อจองบริการตั้งแต่ 200 บาทขึ้นไป</p>
+                        </div>
+                    </li>
+                    <li class="flex items-center space-x-3 bg-yellow-50 p-4 rounded-lg shadow-sm">
+                        <i data-lucide="star" class="w-6 h-6 text-yellow-600"></i>
+                        <div>
+                            <p class="font-medium text-gray-800">สะสมแต้มแลกส่วนลด</p>
+                            <p class="text-sm text-gray-600">ทุก 100 บาท รับ 1 แต้ม แลกส่วนลดได้ทันที!</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <button onclick="showSection('homeSection')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-xl transition duration-300 ease-in-out shadow-md">
+                กลับหน้าหลัก
+            </button>
+        </div>
+
+        <!-- Prices Section -->
+        <div id="pricesSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">ราคาบริการ (โดยประมาณ)</h2>
+            <div class="card">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left rounded-tl-lg">บริการ</th>
+                                <th class="py-3 px-6 text-left">รายละเอียด</th>
+                                <th class="py-3 px-6 text-right rounded-tr-lg">ราคาเริ่มต้น</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700 text-sm font-light">
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <i data-lucide="car" class="w-4 h-4 mr-2 text-purple-500"></i>
+                                        <span class="font-medium">รับ-ส่งสัตว์เลี้ยง</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">เริ่มต้น 5 กม. แรก</td>
+                                <td class="py-3 px-6 text-right">฿150</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <i data-lucide="plus" class="w-4 h-4 mr-2 text-green-500"></i>
+                                        <span class="font-medium">ค่าบริการเพิ่ม/กม.</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">สำหรับ กม. ถัดไป</td>
+                                <td class="py-3 px-6 text-right">฿15</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="py-3 px-6 text-left whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <i data-lucide="package" class="w-4 h-4 mr-2 text-yellow-500"></i>
+                                        <span class="font-medium">สัตว์เลี้ยงตัวที่ 2+</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">ต่อตัว (ขนาดเล็ก-กลาง)</td>
+                                <td class="py-3 px-6 text-right">฿50</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="py-3 px-6 text-left whitespace-nowrap rounded-bl-lg">
+                                    <div class="flex items-center">
+                                        <i data-lucide="clock" class="w-4 h-4 mr-2 text-red-500"></i>
+                                        <span class="font-medium">บริการนอกเวลา</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 px-6 text-left">22:00 - 06:00 น.</td>
+                                <td class="py-3 px-6 text-right rounded-br-lg">เพิ่ม ฿50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-xs text-gray-500 mt-4 text-center">
+                    * ราคาเป็นเพียงการประมาณการ ราคาจริงอาจแตกต่างกันไปตามระยะทาง, ขนาดสัตว์เลี้ยง และช่วงเวลา
+                </p>
+            </div>
+            <button onclick="showSection('homeSection')" class="w-full bg-gray-400 hover:bg-gray-500 text-white font-bold py-3 px-4 rounded-xl transition duration-300 ease-in-out shadow-md">
+                กลับหน้าหลัก
+            </button>
+        </div>
+
+        <!-- Book Section -->
+        <div id="bookSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">จองบริการรับ-ส่ง</h2>
+
+            <div class="mb-5">
+                <label for="petNameInput" class="form-label">ชื่อสัตว์เลี้ยง:</label>
+                <input type="text" id="petNameInput" class="form-input" placeholder="เช่น: โชคดี">
+            </div>
+
+            <div class="mb-5">
+                <label for="petSpeciesInput" class="form-label">สายพันธุ์:</label>
+                <input type="text" id="petSpeciesInput" class="form-input" placeholder="เช่น: สุนัข - โกลเด้นรีทรีฟเวอร์">
+            </div>
+
+            <div class="mb-5">
+                <label for="numPets" class="form-label">จำนวนสัตว์เลี้ยง:</label>
+                <input type="number" id="numPets" value="1" min="1" class="form-input">
+            </div>
+
+            <div class="mb-5">
+                <label for="pickupLocationDisplay" class="form-label">จุดรับ:</label>
+                <button type="button" onclick="openMapModal('pickup')" class="form-button-map">
+                    <span id="pickupLocationDisplay" class="truncate text-gray-600">คลิกเพื่อเลือกจุดรับบนแผนที่</span>
+                    <i data-lucide="map-pin" class="w-5 h-5 ml-2 text-purple-500"></i>
+                </button>
+                <input type="hidden" id="pickupLocationLat">
+                <input type="hidden" id="pickupLocationLng">
+            </div>
+
+            <div class="mb-8">
+                <label for="dropoffLocationDisplay" class="form-label">จุดส่ง:</label>
+                <button type="button" onclick="openMapModal('dropoff')" class="form-button-map">
+                    <span id="dropoffLocationDisplay" class="truncate text-gray-600">คลิกเพื่อเลือกจุดส่งบนแผนที่</span>
+                    <i data-lucide="map-pin" class="w-5 h-5 ml-2 text-purple-500"></i>
+                </button>
+                <input type="hidden" id="dropoffLocationLat">
+                <input type="hidden" id="dropoffLocationLng">
+            </div>
+
+            <button onclick="confirmBooking()" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+                ยืนยันการจอง
+            </button>
+        </div>
+
+        <!-- Finding Driver Section -->
+        <div id="findingDriverSection" class="content-section">
+            <div class="flex flex-col items-center justify-center h-full text-center py-20">
+                <div class="spinner mb-8"></div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-3">กำลังค้นหาคนขับ...</h2>
+                <p class="text-gray-600 mb-8">โปรดรอสักครู่ เรากำลังหาคนขับที่เหมาะสมที่สุดสำหรับสัตว์เลี้ยงของคุณ</p>
+                <img src="https://placehold.co/180x180/e0e7ff/6a5acd?text=🔍🐶" alt="Searching for driver illustration" class="rounded-full mb-8 shadow-md">
+                <button onclick="cancelBooking()" class="w-full max-w-xs bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-300 ease-in-out">
+                    ยกเลิกการจอง
+                </button>
+            </div>
+        </div>
+
+        <!-- Live Tracking Section -->
+        <div id="liveTrackingSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6" id="liveTrackingTitle">ติดตามการเดินทาง</h2>
+
+            <div class="bg-gray-200 h-56 rounded-xl flex items-center justify-center mb-5 text-gray-500 text-sm shadow-md">
+                แผนที่แสดงตำแหน่งสัตว์เลี้ยงแบบเรียลไทม์ (จำลอง)
+            </div>
+
+            <div class="card mb-5">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Pet Cam (สด)</h3>
+                <div class="pet-cam-placeholder">
+                    <i data-lucide="video" class="w-7 h-7 mr-2"></i> กำลังสตรีม Pet Cam...
+                </div>
+            </div>
+
+            <div class="card mb-5">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">ข้อมูลคนขับ</h3>
+                <div class="flex items-center space-x-4">
+                    <img src="https://placehold.co/60x60/8a2be2/ffffff?text=👨" alt="Driver Avatar" class="rounded-full border-2 border-purple-300" id="driverAvatar">
+                    <div>
+                        <p class="font-medium text-gray-700" id="driverName">คุณสมชาย ใจดี</p>
+                        <p class="text-sm text-gray-500" id="driverCar">รถยนต์: Honda City สีขาว (ทะเบียน กข 1234)</p>
+                        <p class="text-sm text-gray-500" id="driverRating">คะแนน: 4.9/5.0 (ผ่านการอบรมดูแลสัตว์)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="text-lg font-semibold text-gray-700 mb-2">Pet Message</h3>
+                <div class="space-y-3" id="petMessagesContainer">
+                    <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-800">"เจ้าเหมียวร้องเพลงตลอดทางเลยครับ! น่ารักมากเลยครับ 😻"</p>
+                        <p class="text-xs text-gray-500 text-right mt-1">จากคนขับ - 10:15 น.</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded-lg shadow-sm">
+                        <p class="text-sm text-gray-800">"น้องหมาหลับตั้งแต่ขึ้นรถเลยครับ ตอนนี้ใกล้ถึงแล้วครับ 🐶"</p>
+                        <p class="text-xs text-gray-500 text-right mt-1">จากคนขับ - 10:00 น.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">เข้าสู่ระบบ PetPorter</h2>
+
+            <div class="space-y-4 mb-6">
+                <div class="form-group">
+                    <label for="email" class="form-label">อีเมล</label>
+                    <input type="email" id="email" class="form-input" placeholder="กรอกอีเมลของคุณ" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">รหัสผ่าน</label>
+                    <input type="password" id="password" class="form-input" placeholder="กรอกรหัสผ่านของคุณ" />
+                </div>
+
+                <div class="flex justify-center gap-4 mt-6">
+                    <button class="login-btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md" onclick="login()">
+                        เข้าสู่ระบบ
+                    </button>
+                    <button class="register-btn bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md" onclick="register()">
+                        สมัครสมาชิก
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center my-6">
+                <div class="flex-grow border-t border-gray-300"></div>
+                <span class="flex-shrink mx-4 text-gray-500 text-sm">หรือเข้าสู่ระบบด้วย</span>
+                <div class="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            <div class="space-y-4">
+                <button class="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-gray-50 transition duration-200">
+                    <img src="https://img.icons8.com/color/24/000000/google-logo.png" alt="Google icon" class="w-5 h-5 mr-3">
+                    ลงชื่อเข้าใช้ด้วย Google
+                </button>
+                <button class="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-gray-50 transition duration-200">
+                    <img src="https://img.icons8.com/fluency/24/000000/facebook-new.png" alt="Facebook icon" class="w-5 h-5 mr-3">
+                    ลงชื่อเข้าใช้ด้วย Facebook
+                </button>
+                <button class="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-gray-50 transition duration-200">
+                    <img src="https://img.icons8.com/ios-filled/24/000000/mac-os.png" alt="Apple icon" class="w-5 h-5 mr-3">
+                    ลงชื่อเข้าใช้ด้วย Apple
+                </button>
+            </div>
+
+            <p class="text-center text-sm text-gray-500 mt-8">
+                ยังไม่มีบัญชีใช่ไหม? <a href="#" class="text-purple-600 hover:underline">สร้างบัญชีใหม่</a>
+            </p>
+        </div>
+
+        <!-- Account Section -->
+        <div id="accountSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">บัญชีของฉัน</h2>
+            <div id="accountInfo" class="card mb-5">
+                <!-- Content will be dynamically loaded by JS based on login status -->
+                <p class="text-center text-gray-500">กำลังโหลดข้อมูลบัญชี...</p>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="flex justify-around bg-white border-t border-gray-100 p-2 rounded-b-2xl shadow-xl z-50 relative">
+            <button id="navHome" onclick="showSection('homeSection')" class="nav-button active">
+                <i data-lucide="home" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">หน้าหลัก</span>
+            </button>
+            <button id="navBook" onclick="showSection('bookSection')" class="nav-button">
+                <i data-lucide="plus-circle" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">จอง</span>
+            </button>
+            <button id="navTracking" onclick="showSection('liveTrackingSection')" class="nav-button">
+                <i data-lucide="map-pin" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">ติดตาม</span>
+            </button>
+            <button id="navLogin" onclick="showSection('loginSection')" class="nav-button">
+                <i data-lucide="log-in" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">เข้าสู่ระบบ</span>
+            </button>
+            <button id="navAccount" onclick="showSection('accountSection')" class="nav-button">
+                <i data-lucide="user" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">บัญชี</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Message Box HTML -->
+    <div id="messageBoxOverlay" class="message-box-overlay">
+        <div class="message-box-content">
+            <h3 id="messageBoxTitle"></h3>
+            <p id="messageBoxText"></p>
+            <button onclick="hideMessageBox()">ตกลง</button>
+        </div>
+    </div>
+
+    <!-- Map Modal HTML -->
+    <div id="mapModal" class="map-modal-overlay">
+        <div class="map-modal-content">
+            <div class="map-modal-header">
+                <span id="mapModalTitle">เลือกจุดรับ</span>
+                <button onclick="closeMapModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="map" class="w-full"></div>
+            <div class="map-modal-footer">
+                <button onclick="selectLocationFromMap()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg">
+                    ยกเลิก
+                </button>
+                <button onclick="selectLocationFromMap()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold py-2 px-4 rounded-lg">
+                    เลือกตำแหน่งนี้
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
