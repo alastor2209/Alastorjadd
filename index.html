@@ -147,12 +147,12 @@
             const headerTitle = document.getElementById('appHeader');
             switch (sectionId) {
                 case 'homeSection':
-                    headerTitle.textContent = 'หน้าหลัก'; // Changed back to 'หน้าหลัก'
+                    headerTitle.textContent = 'หน้าหลัก';
                     break;
-                case 'promotionsSection': // New section
+                case 'promotionsSection':
                     headerTitle.textContent = 'โปรโมชั่น';
                     break;
-                case 'pricesSection': // New section
+                case 'pricesSection':
                     headerTitle.textContent = 'ราคาบริการ';
                     break;
                 case 'bookSection':
@@ -167,9 +167,11 @@
                 case 'loginSection':
                     headerTitle.textContent = 'เข้าสู่ระบบ';
                     break;
-                case 'accountSection': // New account section
+                case 'registerSection': // New case for register section
+                    headerTitle.textContent = 'สมัครสมาชิก';
+                    break;
+                case 'accountSection':
                     headerTitle.textContent = 'บัญชีของฉัน';
-                    // Load user profile data when navigating to account section
                     loadUserProfile();
                     break;
                 default:
@@ -302,8 +304,8 @@
          * Handles user registration with email and password.
          */
         window.register = function () { // Make globally accessible
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const email = document.getElementById('registerEmail').value; // Use new ID
+            const password = document.getElementById('registerPassword').value; // Use new ID
 
             if (!email || !password) {
                 showMessageBox("ข้อมูลไม่ครบถ้วน", "โปรดกรอกอีเมลและรหัสผ่านให้ครบถ้วน");
@@ -327,8 +329,9 @@
                         showMessageBox("สมัครสมาชิกสำเร็จ!", "ยินดีต้อนรับ " + user.email + " คุณสามารถเข้าสู่ระบบได้แล้ว");
                         console.log("User data saved to RTDB.");
                         // Clear form after successful registration
-                        document.getElementById('email').value = "";
-                        document.getElementById('password').value = "";
+                        document.getElementById('registerEmail').value = "";
+                        document.getElementById('registerPassword').value = "";
+                        showSection('loginSection'); // Go back to login after successful registration
                     }).catch((dbError) => {
                         console.error("Error writing user to RTDB:", dbError);
                         showMessageBox("สมัครสมาชิกสำเร็จ", "แต่บันทึกข้อมูลผู้ใช้ไม่สมบูรณ์: " + dbError.message);
@@ -1095,10 +1098,13 @@
 
             <!-- New Image Input Section -->
             <div class="card mb-6 flex flex-col items-center">
-                <h3 class="text-lg font-semibold text-gray-700 mb-3">โปรโมชั่นปัจจุบัน</h3>
-                <img id="homeImagePreview" src="https://placehold.co/300x150/fcd34d/000000?text=Promotion" alt="Home Image" class="w-full h-40 object-cover rounded-lg mb-4 shadow-md">
+                <h3 class="text-lg font-semibold text-gray-700 mb-3">รูปภาพประจำวันของสัตว์เลี้ยง</h3>
+                <img id="homeImagePreview" src="https://placehold.co/300x150/fcd34d/000000?text=Your+Pet+Here" alt="Home Image" class="w-full h-40 object-cover rounded-lg mb-4 shadow-md">
                 <input type="file" id="homeImageInput" class="hidden" accept="image/*" onchange="handleHomeImageChange(event)">
-                
+                <button onclick="document.getElementById('homeImageInput').click()" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-xl transition duration-300 ease-in-out shadow-md flex items-center justify-center">
+                    <i data-lucide="image" class="w-5 h-5 mr-2"></i>
+                    เลือกรูปภาพ
+                </button>
             </div>
             <!-- End New Image Input Section -->
 
@@ -1344,9 +1350,6 @@
                     <button class="login-btn bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md" onclick="login()">
                         เข้าสู่ระบบ
                     </button>
-                    <!--button class="register-btn bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md" onclick="register()">
-                        สมัครสมาชิก
-                    <button>-->
                 </div>
             </div>
 
@@ -1372,7 +1375,34 @@
             </div>
 
             <p class="text-center text-sm text-gray-500 mt-8">
-                ยังไม่มีบัญชีใช่ไหม? <a href="#" class="text-purple-600 hover:underline">สร้างบัญชีใหม่</a>
+                ยังไม่มีบัญชีใช่ไหม? <a href="#" onclick="showSection('registerSection')" class="text-purple-600 hover:underline">สมัครสมาชิก Petpaw</a>
+            </p>
+        </div>
+
+        <!-- Register Section (New) -->
+        <div id="registerSection" class="content-section">
+            <h2 class="text-2xl font-bold text-gray-800 mb-8 text-center">สมัครสมาชิก Petpaw</h2>
+
+            <div class="space-y-4 mb-6">
+                <div class="form-group">
+                    <label for="registerEmail" class="form-label">อีเมล</label>
+                    <input type="email" id="registerEmail" class="form-input" placeholder="กรอกอีเมลของคุณ" />
+                </div>
+
+                <div class="form-group">
+                    <label for="registerPassword" class="form-label">รหัสผ่าน</label>
+                    <input type="password" id="registerPassword" class="form-input" placeholder="กรอกรหัสผ่านของคุณ" />
+                </div>
+
+                <div class="flex justify-center gap-4 mt-6">
+                    <button class="register-btn bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition duration-300 ease-in-out shadow-md" onclick="register()">
+                        สมัครสมาชิก
+                    </button>
+                </div>
+            </div>
+
+            <p class="text-center text-sm text-gray-500 mt-8">
+                มีบัญชีอยู่แล้วใช่ไหม? <a href="#" onclick="showSection('loginSection')" class="text-purple-600 hover:underline">เข้าสู่ระบบ</a>
             </p>
         </div>
 
